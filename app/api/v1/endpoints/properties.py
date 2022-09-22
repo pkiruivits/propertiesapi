@@ -42,12 +42,12 @@ def upload(file: UploadFile = File(...)):
     return {"message": f"Successfuly uploaded {file.filename}"}
 
 @router.post("/uploadfile/")
-async def create_upload_file(name:str,description:str,specification:str,files: List[UploadFile]= File(...),db: AsyncSession = Depends(get_db_session)):
+async def create_upload_file(name:str,description:str,specification:str,architects:str,area:int,year:int,manufacturers:str,files: List[UploadFile]= File(...),db: AsyncSession = Depends(get_db_session)):
     
     #json_object = json.loads(rbody)
     print('First entry',name,description,specification)
     try:
-        property=propdetailsschema.propdetailsCreate(name=name,description=description,specification=specification)
+        property=propdetailsschema.propdetailsCreate(name=name,description=description,specification=specification,architects=architects,area=area,year=year,manufacturers=manufacturers)
         db_property=await crud.create_property(db=db,property=property)
         if db_property:
             print('second entry',db_property)
